@@ -18,8 +18,8 @@ function Convert-ChordalMap {
         "A", "B", "C", "D", "E", "F", "G"
     )
 
-    $Notes_Steps = ('Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G',
-        'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G'
+    $Notes_Steps = ('A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
+        'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'
     )
 
     1..7 | foreach-object {

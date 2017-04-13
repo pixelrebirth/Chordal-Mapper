@@ -16,7 +16,7 @@ param (
 
 . $PSScriptRoot/functions.ps1
 
-$chordal_data = Import-Csv -Path "Chords by Mode - Chordal Notes.csv"
+$chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
 $base_chord = $chordal_data | Where-Object {$_.mode -eq "Ionian"}
 
 if ($PScmdlet.ParameterSetName -eq "Modes"){
