@@ -2,7 +2,7 @@ function Set-NextChord {
     3-6-4/2-5/7-1
 
     1 - any
-    7.1 - 1 backdoor
+    7 - 1 backdoor
     7 - 3
     3 - 6
     3 - 4
