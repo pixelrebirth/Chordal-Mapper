@@ -14,7 +14,12 @@ function Convert-ChordalMap {
 
         $array += ':'
 
-        $firstDiff = $array[1] - $array[0]
+        if ($array[0] -eq 23){
+            $firstDiff = $array[1] - -1 #calibrated to map
+        }
+        else {
+            $firstDiff = $array[1] - $array[0]
+        }
         $secondDiff = $array[2] - $array[1]
 
         0..4 | foreach-object {
