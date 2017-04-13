@@ -1,5 +1,5 @@
 Mode,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Augments,Mood,Offset
-Lydian,C-E-G-B,D-F#-A-C,E-G-B-D,F#-A-C-E,G-B-D-F#,A-C-E-G,B-D-F#-A,-1,"Very bright, Congradulatory",5
+Lydian,C-E-G-B,D-Gb-A-C,E-G-B-D,Gb-A-C-E,G-B-D-Gb,A-C-E-G,B-D-Gb-A,-1,"Very bright, Congradulatory",5
 Ionian,C-E-G-B,D-F-A-C,E-G-B-D,F-A-C-E,G-B-D-F,A-C-E-G,B-D-F-A,0,"Love songs, uplifting, happy",2
 Mixolydian,C-E-G-Bb,D-F-A-C,E-G-Bb-D,F-A-C-E,G-Bb-D-F,A-C-E-G,Bb-D-F-A,1,Optimistic Realist,6
 Dorian,C-Eb-G-Bb,D-F-A-C,Eb-G-Bb-D,F-A-C-Eb,G-Bb-D-F,A-C-Eb-G,Bb-D-F-A,2,Serious/Attentive,3

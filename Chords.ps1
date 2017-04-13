@@ -29,7 +29,10 @@ if ($PScmdlet.ParameterSetName -eq "Moods"){
     $secondary_chord = $chordal_data | Where-Object {$_.mood -eq $mood_secondary}
 }
 
-Convert-ChordalMap -chord $primary_chord -primary $true
+$output = @()
+$output += Convert-ChordalMap -chord $primary_chord -primary $true
 
 $diff = $primary_chord.Offset - $secondary_chord.Offset
-Convert-ChordalMap -chord $secondary_chord -diff $diff
+$output += Convert-ChordalMap -chord $secondary_chord -diff $diff
+
+return $output | Format-Table

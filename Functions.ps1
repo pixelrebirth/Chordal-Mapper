@@ -13,7 +13,15 @@ function Convert-ChordalMap {
         $primary
     )
 
-    $Notes = ("A", "B", "C", "D", "E", "F", "G", "A", "B", "C", "D", "E", "F", "G", "A", "B", "C", "D", "E", "F", "G")
+    $Notes = ("A", "B", "C", "D", "E", "F", "G",
+        "A", "B", "C", "D", "E", "F", "G",
+        "A", "B", "C", "D", "E", "F", "G"
+    )
+
+    $Notes_Steps = ('Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G',
+        'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G'
+    )
+
     1..7 | foreach-object {
         $chord_num = $_
         $interval = $_ - 1
