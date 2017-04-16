@@ -16,3 +16,5 @@ I ii iii IV v* VI VII - Lydian
 
 Add Blues
 Fix Sharps/Flats
+
+Cannot play ionian and lydian on top of each other
