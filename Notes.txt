@@ -1,12 +1,18 @@
-Ab
-A
-Bb
-B
-C
-Db
-D
-Eb
-E
-F
-Gb
-G
+Get-ChordalRelationship -root D -primary_mode [Major/Minor/Dim] 
+
+KeySignature: 
+Scale:
+Major Modes:
+	B#,D#,E# - Lydian
+ 	 	 - Mixolydian
+Minor Modes:
+
+
+Chords:
+I ii iii IV V vi vii* - Ionian
+I ii iii IV v* VI VII - Lydian
+
+
+
+Add Blues
+Fix Sharps/Flats
