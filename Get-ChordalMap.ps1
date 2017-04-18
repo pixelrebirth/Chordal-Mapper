@@ -1,53 +1,55 @@
 # function Get-ChordalMap {
-    param (
-        [CmdletBinding()]
-        [ValidateSet("C","G", "D", "A", "E", "B", "Cb", "Gb", "F#", "Db", "C#", "Ab", "Eb", "Bb", "F")]$root_key,
-        [ValidateSet("Major","Minor","Dim")]$scale_type
-    )
+#     param (
+#         [CmdletBinding()]
+#         [ValidateSet("C","G", "D", "A", "E", "B", "Cb", "Gb", "F#", "Db", "C#", "Ab", "Eb", "Bb", "F")]$root_key,
+#         [ValidateSet("Major","Minor","Dim")]$scale_type
+#     )
 
     $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
     $modes = $chordal_data.Mode
     $root_notes = @("C","G", "D", "A", "E", "B", "Cb", "Gb", "F#", "Db", "C#", "Ab", "Eb", "Bb", "F")
 
-    if ($scale_type -eq "Major"){
-        $key_signature = switch ($root_key) {
-            "C" {""}
-            "G" {"F♯,"}
-            "D" {"F♯,C♯"}
-            "A" {"F♯,C♯,G♯"}
-            "E" {"F♯,C♯,G♯,D♯"}
-            "B" {"F♯,C♯,G♯,D♯,A♯"}
-            "Cb" {"Bb,Eb,Ab,Db,Gb,Cb,Fb"}
-            "Gb" {"Bb,Eb,Ab,Db,Gb,Cb"}
-            "F#" {"F♯,C♯,G♯,D♯,A♯,E♯"}
-            "Db" {"Bb,Eb,Ab,Db,Gb"}
-            "C#" {"F♯,C♯,G♯,D♯,A♯,E♯,B♯"}
-            "Ab" {"Bb,Eb,Ab,Db"}
-            "Eb" {"Bb,Eb,Ab"}
-            "Bb" {"Bb,Eb"}
-            "F" {"Bb"}
-        }
+    $key_number = switch ($root_key) {
+        "C" {"0"}
+        "G" {"1"}
+        "D" {"2"}
+        "A" {"3"}
+        "E" {"4"}
+        "B" {"5"}
+        "Cb" {"6"}
+        "Gb" {"7"}
+        "F#" {"8"}
+        "Db" {"9"}
+        "C#" {"10"}
+        "Ab" {"11"}
+        "Eb" {"12"}
+        "Bb" {"13"}
+        "F" {"14"}
+    }
+    
+    $root_offset = switch ($scale_type){
+        "Major" {0}
+        "Dim" {-1}
+        "Minor" {-3}
     }
 
-    if ($scale_type -eq "Minor"){
-        $key_signature = switch ($root_key) {
-            "A" {""}
-            "E" {"F♯,"}
-            "B" {"F♯,C♯"}
-            "Cb" {"F♯,C♯,G♯"}
-            "Gb" {"F♯,C♯,G♯,D♯"}
-            "F#" {"F♯,C♯,G♯,D♯,A♯"}
-            "Bb" {"Bb,Eb,Ab,Db,Gb,Cb,Fb"}
-            "C#" {"Bb,Eb,Ab,Db,Gb,Cb"}
-            "Ab" {"F♯,C♯,G♯,D♯,A♯,E♯"}
-            "Eb" {"Bb,Eb,Ab,Db,Gb"}
-            "Bb" {"F♯,C♯,G♯,D♯,A♯,E♯,B♯"}
-            "F" {"Bb,Eb,Ab,Db"}
-            "C" {"Bb,Eb,Ab"}
-            "G" {"Bb,Eb"}
-            "D" {"Bb"}
-        }
+    $key_signature =  switch ($($root_number + $root_offset)) {
+        "0" {""}
+        "1" {"F♯,"}
+        "2" {"F♯,C♯"}
+        "3" {"F♯,C♯,G♯"}
+        "4" {"F♯,C♯,G♯,D♯"}
+        "5" {"F♯,C♯,G♯,D♯,A♯"}
+        "6" {"Bb,Eb,Ab,Db,Gb,Cb,Fb"}
+        "7" {"Bb,Eb,Ab,Db,Gb,Cb"}
+        "8" {"F♯,C♯,G♯,D♯,A♯,E♯"}
+        "9" {"Bb,Eb,Ab,Db,Gb"}
+        "10" {"F♯,C♯,G♯,D♯,A♯,E♯,B♯"}
+        "11" {"Bb,Eb,Ab,Db"}
+        "12" {"Bb,Eb,Ab"}
+        "13" {"Bb,Eb"}
+        "14" {"Bb"}
     }
 
-
+    return $key_signature
 # }
