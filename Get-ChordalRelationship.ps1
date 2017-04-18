@@ -15,7 +15,7 @@ function Get-ChordalRelationship {
             'Sad/Depressed','Exotic/Different','Unsettling and Unruly')]$mood_secondary
     )
 
-   $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
+    $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
     $base_chord = $chordal_data | Where-Object {$_.mode -eq "Ionian"}
 
     if ($PScmdlet.ParameterSetName -eq "Modes"){

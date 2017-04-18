@@ -14,6 +14,8 @@ I ii iii IV V vi vii* - Ionian
 Using black keys makes the music less predictable subconsciously
 If there is a whole setp at the end, use a half step to improve resolution from 7 to 8
 You can play it with more velocity to force resolution
+Avoid the 4th note in a melody, it usually doesnt sound good
+7th note in a melody should resolve to 1 if semitone away
 
 Key C and Key B are the most predictable key signatures
 
