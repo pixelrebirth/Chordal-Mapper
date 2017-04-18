@@ -10,8 +10,12 @@ Minor Modes:
 
 Chords:
 I ii iii IV V vi vii* - Ionian
-I ii iii IV v* VI VII - Lydian
 
+Using black keys makes the music less predictable subconsciously
+If there is a whole setp at the end, use a half step to improve resolution from 7 to 8
+You can play it with more velocity to force resolution
+
+Key C and Key B are the most predictable key signatures
 
 
 Add Blues
