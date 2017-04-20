@@ -29,7 +29,7 @@ function Get-ChordalRelationship {
     }
 
     $output = @()
-    $output += Convert-ChordalMap -chord $primary_chord -primary $true
+    $output += Convert-ChordalMap -chord $primary_chord -diff $diff
 
     $diff = $primary_chord.Offset - $secondary_chord.Offset
     $output += Convert-ChordalMap -chord $secondary_chord -diff $diff

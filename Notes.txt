@@ -24,3 +24,10 @@ Add Blues
 Fix Sharps/Flats
 
 Cannot play ionian and lydian on top of each other
+
+
+Ask, 
+Do you want to add energy or take it away? (up chords, down chords)
+Do you want to shift moods of the song? (available options based on the last chord matches)
+To what degree subtle/normal/aggressive/octave first invert, normal, second invert, octave
+How much change? (chord steps possible)
