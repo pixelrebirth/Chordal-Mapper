@@ -1,10 +1,29 @@
 function Convert-ChordalMap {
     param ($chord,$scale)
 
+    if ($scale -match "\wb"){
+        $notes_array = (
+            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
+            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
+            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'
+        )
+    }
+    
+    if ($scale -match "\w#"){
+        $notes_array = (
+            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
+            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
+            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'
+        )
+    }
+    
+    $count = 0
+    $notes_array | foreach {
+        if ($_ -match $scale[0]){$diff = $count}
+        else {$count++}
+    }
+
     $chord_base = [int]$chord.Chord_1.split('-')[0] + [int]$chord.Offset - 3 + $diff
-
-    # replace old flat/sharp and check scale for which one and root note to set DIFF
-
     1..7 | foreach-object {
         $chord_num = $_
         $array = $chord."chord_$chord_num".split('-')
@@ -27,7 +46,7 @@ function Convert-ChordalMap {
                 }
                 else {
                     $note_step = [int]$chord_base + [int]$array[$_]
-                    $array[$_] = $notes[$note_step]
+                    $array[$_] = $notes_array[$note_step]
                 }
         }
         $string = $array -join "-"

@@ -1,11 +1,15 @@
-function Get-ChordalRelationship {
-    param (
-        [ValidateSet("A#","B#", "C#", "D#", "E#", "F#", "G#", "A","B", "C", "D", "E", "F", "G", "Ab","Bb", "Cb", "Db", "Eb", "Fb", "Gb")]$root_key,
-        [ValidateSet("Major","Minor","Dim")]$scale_type
-    )
+# # function Get-ChordalRelationship {
+#     param (
+#         [ValidateSet("A#","B#", "C#", "D#", "E#", "F#", "G#", "A","B", "C", "D", "E", "F", "G", "Ab","Bb", "Cb", "Db", "Eb", "Fb", "Gb")]$root_key,
+#         [ValidateSet("Major","Minor","Dim")]$scale_type
+#     )
 
-    $scale = Get-KeyScale -root_key $key -scale_type $scale_type
-    Write-Output $(($scale | sort) -join("-"))
+    $root_key = "D"
+    $scale_type = 'Major'
+    import-module .\Chordal-Mapper.psd1 -force
+
+    $scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
+    Write-Output $(($scale) -join("-"))
 
     $signature = Get-KeySignature -key_scale $scale
     Write-Output $signature
@@ -16,5 +20,4 @@ function Get-ChordalRelationship {
     if ($scale_type -eq "Dim"){$base_chord = $chordal_data | Where {$_.mode -eq "Locrian"}}
 
     Convert-ChordalMap -chord $base_chord -scale $scale
-
-}
+# }
