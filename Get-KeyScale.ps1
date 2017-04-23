@@ -102,7 +102,7 @@ function Get-KeyScale {
         $count++
     }
 
-    $output_notes = $scale_notes[$count..6] + $scale_notes[0..$count]
+    $output_notes = $scale_notes[$count..6] + $scale_notes[0..$($count-1)]
 
     $output_notes.split(",")
 }

@@ -3,9 +3,7 @@ function Convert-ChordalMap {
 
     $chord_base = [int]$chord.Chord_1.split('-')[0] + [int]$chord.Offset - 3 + $diff
 
-    $notes = $scale
-    $notes += $scale
-    $notes += $scale
+    # replace old flat/sharp and check scale for which one and root note to set DIFF
 
     1..7 | foreach-object {
         $chord_num = $_
