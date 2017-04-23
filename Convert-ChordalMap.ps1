@@ -1,5 +1,5 @@
 function Convert-ChordalMap {
-    param ($chord,$diff = 0,$scale)
+    param ($chord,$scale)
 
     $chord_base = [int]$chord.Chord_1.split('-')[0] + [int]$chord.Offset - 3 + $diff
 

@@ -1,7 +1,7 @@
 function Get-KeyScale {
     param (
         [CmdletBinding()]
-        [ValidateSet("A#","B#", "D#", "E#", "Fb", "G#", "C","G", "D", "A", "E", "B", "Cb", "Gb", "F#", "Db", "C#", "Ab", "Eb", "Bb", "F")]$root_key,
+        [ValidateSet("A#","B#", "C#", "D#", "E#", "F#", "G#", "A","B", "C", "D", "E", "F", "G", "Ab","Bb", "Cb", "Db", "Eb", "Fb", "Gb")]$root_key,
         [ValidateSet("Major","Minor","Dim")]$scale_type
     )
 
