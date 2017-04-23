@@ -93,5 +93,5 @@ function Get-KeySignature {
         default {"Key: $root_key not on circle of fifths for scale: $scale_type"}
     }
 
-    $key_signature.split(",") | Sort
+    $key_signature.split(",")
 }
