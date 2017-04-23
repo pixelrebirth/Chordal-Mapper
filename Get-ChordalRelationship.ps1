@@ -6,6 +6,7 @@
 
     $root_key = "D"
     $scale_type = 'Major'
+
     import-module .\Chordal-Mapper.psd1 -force
 
     $scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
