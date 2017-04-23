@@ -1,5 +1,5 @@
 function Set-NextChord {
-    3-6-4/2-5/7-1
+    '3-6-4/2-5/7-1
 
     1 - any
     7 - 1 backdoor
@@ -17,5 +17,5 @@ function Set-NextChord {
     5 - 6 deceptive
     5 - 1 perfect
     5 - 7 deceptive
-    7 - 6
+    7 - 6'
 }

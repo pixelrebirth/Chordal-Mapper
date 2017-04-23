@@ -1,21 +1,11 @@
 function Convert-ChordalMap {
-    param ($chord,$diff = 0,$augment)
-
-    if ($augment -eq "Flat"){
-        $Notes = ('A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
-            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
-            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'
-        )
-    }
-    
-    if ($augment -eq "Sharp"){
-        $Notes = ('A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'
-        )
-    }
+    param ($chord,$diff = 0,$scale)
 
     $chord_base = [int]$chord.Chord_1.split('-')[0] + [int]$chord.Offset - 3 + $diff
+
+    $notes = $scale
+    $notes += $scale
+    $notes += $scale
 
     1..7 | foreach-object {
         $chord_num = $_

@@ -1,38 +1,18 @@
-function Get-ChordalRelationship {
-    param (
-        [cmdletbinding(DefaultParameterSetName='Modes')]
+param (
+    $key = "D",
+    $scale_type = "Major"
+)
+remove-module ./chordal-mapper.psd1 -Force
+import-module ./chordal-mapper.psd1
 
-        [Parameter(ParameterSetName="Modes")]
-        [ValidateSet('Lydian','Ionian','Mixolydian','Dorian','Aeolian','Phrygian','Locrian')]$primary_mode,
-        [Parameter(ParameterSetName="Modes")]
-        [ValidateSet('Lydian','Ionian','Mixolydian','Dorian','Aeolian','Phrygian','Locrian')]$secondary_mode,
+$scale = Get-KeyScale -root_key $key -scale_type $scale_type
+Write-Output $(($scale | sort) -join("-"))
 
-        [Parameter(ParameterSetName="Moods")]
-        [ValidateSet('Very bright, Congradulatory','Love songs, uplifting, happy','Optimistic Realist','Serious/Attentive',
-            'Sad/Depressed','Exotic/Different','Unsettling and Unruly')]$mood_primary,
-        [Parameter(ParameterSetName="Moods")]
-        [ValidateSet('Very bright, Congradulatory','Love songs, uplifting, happy','Optimistic Realist','Serious/Attentive',
-            'Sad/Depressed','Exotic/Different','Unsettling and Unruly')]$mood_secondary
-    )
+$signature = Get-KeySignature -key_scale $scale
 
-    $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
-    $base_chord = $chordal_data | Where-Object {$_.mode -eq "Ionian"}
+$chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
+$base_chord = $chordal_data | Where {$_.mode -eq "Ionian"}
 
-    if ($PScmdlet.ParameterSetName -eq "Modes"){
-        $primary_chord = $chordal_data | Where-Object {$_.mode -eq $primary_mode}
-        $secondary_chord = $chordal_data | Where-Object {$_.mode -eq $secondary_mode}
-    }
-
-    if ($PScmdlet.ParameterSetName -eq "Moods"){
-        $primary_chord = $chordal_data | Where-Object {$_.mood -eq $mood_primary}
-        $secondary_chord = $chordal_data | Where-Object {$_.mood -eq $mood_secondary}
-    }
-
-    $output = @()
-    $output += Convert-ChordalMap -chord $primary_chord -diff $diff
-
-    $diff = $primary_chord.Offset - $secondary_chord.Offset
-    $output += Convert-ChordalMap -chord $secondary_chord -diff $diff
-
-    return $output | Format-Table
-}
+$output = @()
+# $output += Convert-ChordalMap -chord $base_chord -diff 0
+return $output | Format-Table
