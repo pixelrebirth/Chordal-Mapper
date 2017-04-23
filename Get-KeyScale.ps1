@@ -74,7 +74,7 @@ function Get-KeyScale {
     $key_diff = $root_number
     if ($key_diff -gt 14){$key_diff = $key_diff - 14}
 
-    $scale_notes =  switch ($key_diff) {
+    $notes_map =  switch ($key_diff) {
         "0" {"F,C,G,D,A,E,B"}
         "1" {"F#,C,G,D,A,E,B"}
         "2" {"F#,C#,G,D,A,E,B"}
@@ -94,7 +94,8 @@ function Get-KeyScale {
     }
 
     $count = 0
-    foreach ($note in $scale_notes){
+    $scale_notes = [array]$notes_map.split(",") | sort
+    foreach ($note in [array]$scale_notes.split(",")){
         if ($note -eq $root_key){
             break
         }
