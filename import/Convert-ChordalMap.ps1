@@ -40,9 +40,9 @@ function Convert-ChordalMap {
 
             0..4 | foreach-object {
                     if ($_ -eq 4){
-                        if ($firstDiff -gt $secondDiff){$array[$_] = "^"}
-                        if ($firstDiff -lt $secondDiff){$array[$_] = "."}
-                        if ($firstDiff -eq $secondDiff){$array[$_] = "!"}
+                        if ($firstDiff -gt $secondDiff){$array[$_] = Get-ChordalNumeral -inputSymbol "^" -chord_num $chord_num}
+                        if ($firstDiff -lt $secondDiff){$array[$_] = Get-ChordalNumeral -inputSymbol "." -chord_num $chord_num}
+                        if ($firstDiff -eq $secondDiff){$array[$_] = Get-ChordalNumeral -inputSymbol "!" -chord_num $chord_num}
                     }
                     else {
                         $note_step = [int]$chord_base + [int]$array[$_]

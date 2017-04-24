@@ -4,8 +4,8 @@
 #         [ValidateSet("Major","Minor","Dim")]$scale_type
 #     )
 
-    $root_key = "F#"
-    $scale_type = 'Dim'
+    $root_key = "Gb"
+    $scale_type = 'Major'
 
     import-module .\Chordal-Mapper.psd1 -force
 
@@ -16,6 +16,9 @@
         Signature: $(($signature) -join("-"))
     "
 
-    $chordal_map = Convert-ChordalMap -scale $scale
+    try {
+        $chordal_map = Convert-ChordalMap -scale $scale
+    }
+    catch {$error.exception.message ; exit 1}
     $chordal_map | Format-Table
 # }
