@@ -1,4 +1,4 @@
-Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Augments,Mood,Offset,Mode,White_Root_Key
+Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Augments,Mood,Offset,Mode,White_Root_Key,LastChord
 3-7-10-14,5-9-12-15,7-10-14-17,9-12-15-19,10-14-17-21,0-3-7-10,2-5-9-12,-1,"Ethereal",5,Lydian,F
 3-7-10-14,5-8-12-15,7-10-14-17,8-12-15-19,10-14-17-20,0-3-7-10,2-5-8-12,0,"Happy",0,Ionian,C
 3-7-10-13,5-8-12-15,7-10-13-17,8-12-15-19,10-13-17-20,0-3-7-10,1-5-8-12,1,Optimistic Realist,7,Mixolydian,G

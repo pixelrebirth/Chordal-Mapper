@@ -102,9 +102,15 @@ function Get-KeyScale {
         $count++
     }
 
-    $output = "" | select notes,type,offset
+    $output = [KeyScale]::new()
     $output.notes = $scale_notes[$count..6] + $scale_notes[0..$($count-1)]
     $output.type = $scale_type
     $output.offset = $count
     return $output
+}
+
+class KeyScale {
+    $notes
+    $type
+    $offset
 }
