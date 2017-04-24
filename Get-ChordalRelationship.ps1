@@ -4,21 +4,17 @@
 #         [ValidateSet("Major","Minor","Dim")]$scale_type
 #     )
 
-    $root_key = "D"
-    $scale_type = 'Major'
+    $root_key = "G"
+    $scale_type = 'Minor'
 
     import-module .\Chordal-Mapper.psd1 -force
 
     $scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
-    Write-Output $(($scale) -join("-"))
-
     $signature = Get-KeySignature -key_scale $scale
-    Write-Output $signature
+    Write-Output "
+        Scale: $(($scale.notes) -join("-"))
+        Signature: $(($signature) -join("-"))
+    "
 
-    $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
-    if ($scale_type -eq "Major"){$base_chord = $chordal_data | Where {$_.mode -eq "Ionian"}}
-    if ($scale_type -eq "Minor"){$base_chord = $chordal_data | Where {$_.mode -eq "Aeolian"}}
-    if ($scale_type -eq "Dim"){$base_chord = $chordal_data | Where {$_.mode -eq "Locrian"}}
-
-    Convert-ChordalMap -chord $base_chord -scale $scale
+    Convert-ChordalMap -scale $scale
 # }

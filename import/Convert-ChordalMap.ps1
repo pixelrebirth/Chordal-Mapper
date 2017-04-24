@@ -1,29 +1,27 @@
 function Convert-ChordalMap {
-    param ($chord,$scale)
+    param ($scale)
 
-    if ($scale -match "\wb"){
-        $notes_array = (
-            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
-            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
-            'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'
-        )
+    $scale_offset = $scale.offset
+    $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
+    if ($scale.type -eq "Major"){$chord = $chordal_data | Where {$_.mode -eq "Ionian"}}
+    if ($scale.type -eq "Minor"){$chord = $chordal_data | Where {$_.mode -eq "Aeolian"}}
+    if ($scale.type -eq "Dim"){$chord = $chordal_data | Where {$_.mode -eq "Locrian"}}
+
+    if ($scale.notes  -match "\wb"){
+        $notes_array = 0..100 | foreach {@('A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab')}
     }
     
-    if ($scale -match "\w#"){
-        $notes_array = (
-            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-            'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'
-        )
+    if ($scale.notes  -match "\w#"){
+        $notes_array = 0..100 | foreach {@('A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#')}
     }
     
     $count = 0
     $notes_array | foreach {
-        if ($_ -match $scale[0]){$diff = $count}
+        if ($_ -eq $scale.notes[0]){$diff = $count}
         else {$count++}
     }
 
-    $chord_base = [int]$chord.Chord_1.split('-')[0] + [int]$chord.Offset - 3 + $diff
+    $chord_base = [int]$chord.Chord_1.split('-')[0] + $diff - 2
     1..7 | foreach-object {
         $chord_num = $_
         $array = $chord."chord_$chord_num".split('-')
@@ -46,6 +44,7 @@ function Convert-ChordalMap {
                 }
                 else {
                     $note_step = [int]$chord_base + [int]$array[$_]
+                    $note_step
                     $array[$_] = $notes_array[$note_step]
                 }
         }

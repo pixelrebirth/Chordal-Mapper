@@ -90,7 +90,7 @@ function Get-KeyScale {
         "12" {"Bb,Eb,Ab,D,G,C,F"}
         "13" {"Bb,Eb,A,D,G,C,F"}
         "14" {"Bb,E,A,D,G,C,F"}
-        default {"Key: $root_key not on circle of fifths for scale: $scale_type"}
+        default {throw "Key: $root_key not on circle of fifths for scale: $scale_type" ; exit 1}
     }
 
     $count = 0
@@ -102,7 +102,9 @@ function Get-KeyScale {
         $count++
     }
 
-    $output_notes = $scale_notes[$count..6] + $scale_notes[0..$($count-1)]
-
-    $output_notes
+    $output = "" | select notes,type,offset
+    $output.notes = $scale_notes[$count..6] + $scale_notes[0..$($count-1)]
+    $output.type = $scale_type
+    $output.offset = $count
+    return $output
 }
