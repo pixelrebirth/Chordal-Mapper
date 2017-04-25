@@ -10,11 +10,11 @@ function Convert-ChordalMap {
     if ($scale.notes  -match "\wb"){
         $notes_array = 0..100 | foreach {@('A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab')}
     }
-    
+
     if ($scale.notes  -match "\w#"){
         $notes_array = 0..100 | foreach {@('A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#')}
     }
-    
+
     $count = 0
     $notes_array | foreach {
         if ($_ -eq $scale.notes[0]){$diff = $count}
@@ -54,5 +54,4 @@ function Convert-ChordalMap {
         }
         $current_mode
     }
-    return $chords
 }
