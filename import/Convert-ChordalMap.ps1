@@ -15,6 +15,10 @@ function Convert-ChordalMap {
         $notes_array = 0..100 | foreach {@('A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#')}
     }
 
+   if (!$notes_array){
+        $notes_array = 0..100 | foreach {@('A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#')}
+    }
+
     $count = 0
     $notes_array | foreach {
         if ($_ -eq $scale.notes[0]){$diff = $count}
