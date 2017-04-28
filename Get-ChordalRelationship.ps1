@@ -31,27 +31,28 @@ $progression += $NextChord.Chord_1
 $choice = 1
 clear
 
-Write-host "Starting Chord: $($NextChord.Chord_1),$($NextChord.mode) and of $($NextChord.type) type"
-
 1..$final_chord | foreach {
+    Write-host "Previous Chord: $($NextChord.Chord_1), $($NextChord.mood) and of $($NextChord.scaletype) type"
     if ($final_chord-1 -eq $_){Write-Host "`n`tFirst Cadence Chord" -f red ; Get-Cadence}
     if ($final_chord -eq $_){Write-Host "`n`tFinal Cadence Chord ($choice)" -f red ; Get-Cadence}
     $chords | select  Mood,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7 | ft
-    $mood = Read-Host "Mood Chord $($_ + 1)"
-    $NextChord = $chordal_map | where {$_.mood -match $mood}
     $NextNumber = Get-NextChord -CurrentChord $choice
     $choice = Read-Host "Next Chord: $NextNumber"
+    $mood = Read-Host "Mood Chord $($_ + 1)"
+    $NextChord = $chordal_map | where {$_.mood -match $mood}
     $progression += $NextChord."Chord_$choice"
     $chords = $chordal_map | where {$_."Chord_$choice" -match $($NextChord."Chord_$choice")}
     clear
 }
 
 Write-Host "
-    Scale: $(($scale.notes) -join("-"))
-    Signature: $(($signature) -join("-"))
-"
-
+Scale: $(($scale.notes) -join("-"))
+Signature: $(($signature) -join("-"))
+----------
+Note Progression:"
 $progression
-"----------"
-($progression.split('-') | where {$_ -match "i|v"}) -join ("-")
-"---END---"
+Write-Host "----------
+Numeral Progression:
+$(($progression.split('-') | where {$_ -match "i|v"}) -join ("-"))
+---END---
+"
