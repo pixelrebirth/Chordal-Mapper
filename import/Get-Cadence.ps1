@@ -1,20 +1,12 @@
 function Get-Cadence {
-    write-host "
-        1) V-I  : Perfect
-        2) IV-I : Plagal
-        3) II-V : Imperfect
-        4) IV-V : Imperfect
-        5) I-V  : Imperfect
-        6) V-VI : Deceptive
-        7) VII-I: Backdoor"
-    
-    $cadance = Read-Host Choose a cadance by number
-    switch ($cadance) {
-        "1" {"5-1"}
-        "2" {"4-1"}
-        "3" {"2-5"}
-        "4" {"4-5"}
-        "6" {"5-6"}
-        "7" {"7-1"}
-    }
+    write-host -f yellow "
+        Rest = Rhythmic +
+        1-5  = Imperfect --
+        2-5  = Half -
+        4-1  = Plagal +
+        4-5  = Imperfect -
+        5-1  = Perfect ++
+        5-6  = Deceptive -
+        7-1  = Backdoor +
+    "
 }
