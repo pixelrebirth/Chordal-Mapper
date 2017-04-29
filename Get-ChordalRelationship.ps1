@@ -23,23 +23,27 @@ if ($scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locri
 $chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
 $progression = @()
 
-try {[int]$final_chord = Read-Host "Number Chords in Progression"} catch {Write-Host "Must be integer."}
-$final_chord = $final_chord - 1
-
-
 $progression += $NextChord.Chord_1
 $choice = 1
+$chord_counter = 0
 clear
 
-1..$final_chord | foreach {
-    Write-host "Previous Chord: $($NextChord.Chord_1), $($NextChord.mood) and of $($NextChord.scaletype) type"
-    if ($final_chord-1 -eq $_){Write-Host "`n`tFirst Cadence Chord" -f red ; Get-Cadence}
-    if ($final_chord -eq $_){Write-Host "`n`tFinal Cadence Chord ($choice)" -f red ; Get-Cadence}
-    $chords | select  Mood,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7 | ft
+while ($true) {
+    $chord_counter++
+    Write-host "`nPrevious Chords:`n"
+    $Progression
+    Write-Host "`n`tCadence Chart" -f yellow
+    Get-Cadence
+
+    $chords | select  Mode,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mood | ft
     $NextNumber = Get-NextChord -CurrentChord $choice
+
     $choice = Read-Host "Next Chord: $NextNumber"
-    $mood = Read-Host "Mood Chord $($_ + 1)"
-    $NextChord = $chordal_map | where {$_.mood -match $mood}
+    if ($choice -eq "x"){break}
+
+    $mode = Read-Host "Mode Chord $($chord_counter + 1)"
+    
+    $NextChord = $chordal_map | where {$_.mode-match $mode}
     $progression += $NextChord."Chord_$choice"
     $chords = $chordal_map | where {$_."Chord_$choice" -match $($NextChord."Chord_$choice")}
     clear

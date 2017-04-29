@@ -31,3 +31,61 @@ Do you want to add energy or take it away? (up chords, down chords)
 Do you want to shift moods of the song? (available options based on the last chord matches)
 To what degree subtle/normal/aggressive/octave first invert, normal, second invert, octave
 How much change? (chord steps possible)
+
+
+lydian:---#----
+
+scale: C#,D#,E#,F#
+
+if (mode sharps){if (b){remove b} else {add #}}
+if (mode flats){if (#){remove #} else {add b}}
+
+class Mode {
+    $type
+    $name
+    $accidentals
+    $chords
+    $mood
+    Mode ($name){
+        $this.name = $name
+        $this.accidentals = switch ($name) {
+            "Lydian" {"---#----"}
+        }
+        $this.type = switch -regex ($name) {
+            "Lydian|Ionian|Mixolydian" {"Major"}
+        }
+        $this.chords = switch ($name) {
+            "Lydian" {@("I","ii"...}
+        }
+        $this.mood = switch ($name) {
+            "Lydian" {"Ethereal"}
+        }
+    }
+    [void] GetScale ($scale) {
+        return $scale with accidentals
+        using 
+            if (mode sharps){if (b){remove b} else {add #}}
+            if (mode flats){if (#){remove #} else {add b}}
+    }
+}
+
+$majorscale = Get-KeyScale -root_ ...
+$lydian = [Mode]::new("Lydian")
+$Mixolydian = 
+
+if major
+	$scale = $Lydian.GetScale($majorscale)
+	$scale[0]-$scale[2]-$scale[4]-$scale[6]
+
+	$scale = $Mixolydian.GetScale($majorscale)
+	$scale[0]-$scale[2]-$scale[4]-$scale[6]
+
+if minor
+
+class Progression {
+	[array]$chords
+	
+	[void] RecordMidi {
+		convert $chords
+	}
+}
