@@ -2,7 +2,7 @@ function Convert-ChordalMap {
     param ($scale)
 
     $scale_offset = $scale.offset
-    $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
+    # $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
     if ($scale.type -eq "Major"){$root_chord = $chordal_data | Where {$_.mode -eq "Ionian"}}
     if ($scale.type -eq "Minor"){$root_chord = $chordal_data | Where {$_.mode -eq "Aeolian"}}
     if ($scale.type -eq "Dim"){$root_chord = $chordal_data | Where {$_.mode -eq "Locrian"}}
