@@ -5,9 +5,6 @@ function Get-KeyScale {
         [ValidateSet("Major","Minor","Dim")]$scale_type
     )
 
-    $chordal_data = Import-Csv -Path "Chords by Mode - Step Sheet.csv"
-    $modes = $chordal_data.Mode
-
     if ($scale_type -eq "Major"){
         $root_number = switch ($root_key) {
             "C" {0}

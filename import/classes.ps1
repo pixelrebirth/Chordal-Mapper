@@ -2,7 +2,7 @@ class Mode {
     $type
     $name
     $accidentals
-    $chords
+    $voice
     $mood
     Mode ($name){
         $this.name = $name
@@ -16,16 +16,18 @@ class Mode {
             "Lydian"        {"-b-b--b-b-b"}
         }
         $this.type = switch -regex ($name) {
-            "Lydian|Ionian|Mixolydian" {"Major"}
+            "Lydian|Ionian|Mixolydian"  {"Major"}
+            "Dorian|Aeolian|Phrygian"   {"Minor"}
+            "Locrian"                   {"Dim"}
         }
-        $this.chords = switch ($name) {
-            "Lydian"        {@("i","II","iii","iv*","V","vi","vii")}
+        $this.voice = switch ($name) {
             "Ionian"        {@("I","ii","iii","IV","V","vi","vii*")}
-            "Mixolydian"    {@("i","II","iii","iv*","V","vi","vii")}
-            "Lydian"        {@("i","II","iii","iv*","V","vi","vii")}
-            "Lydian"        {@("i","II","iii","iv*","V","vi","vii")}
-            "Lydian"        {@("i","II","iii","iv*","V","vi","vii")}
-            "Lydian"        {@("i","II","iii","iv*","V","vi","vii")}
+            "Dorian"        {@("i","ii","III","IV","v","vi*","VII")}
+            "Phrygian"      {@("i","II","III","iv","v*","VI","vii")}
+            "Lydian"        {@("I","II","iii","iv*","V","vi","vii")}
+            "Mixolydian"    {@("I","ii","iii*","IV","v","vi","VII")}
+            "Aeolian"       {@("i","ii*","III","iv","v","VI","VII")}
+            "Locrian"       {@("i*","II","iii","iv","V","VI","vii")}
         }
         $this.mood = switch ($name) {
             "Lydian"        {"Ethereal"}
@@ -47,7 +49,15 @@ class Mode {
 
 class Progression {
 	[array]$chords
-	
+    [string]$numerals
+
+    Progression () {
+        $this.chords = @()
+    }
+    [void] Add ($InputChord) {
+        $this.chords += $InputChord
+        $this.numerals = ($this.chords.split('-') | where {$_ -match "i|v"}) -join ("-")
+    }
 	[void] RecordMidi () {
 		'convert $chords'
 	}
@@ -63,13 +73,4 @@ class ChordMap {
     $chord_7
     $mood
     $mode
-}
-
-class Scale {
-    [ValidateSet(
-        "A#","B#", "C#", "D#", "E#", "F#", "G#", "A","B", "C", "D",
-        "E", "F", "G", "Ab","Bb", "Cb", "Db", "Eb", "Fb", "Gb"
-    )]$root_key
-
-    [ValidateSet("Major","Minor","Dim")]$scale_type   
 }

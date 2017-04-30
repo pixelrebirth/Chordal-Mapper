@@ -5,6 +5,7 @@ param (
 
 import-module .\Chordal-Mapper.psd1 -force
 
+$
 $scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
 $signature = Get-KeySignature -key_scale $scale
 Write-Host "
@@ -20,10 +21,11 @@ catch {$error.exception.message ; exit 1}
 if ($scale.type -eq "Major"){$NextChord = $chordal_map | Where {$_.mode -eq "Ionian"}}
 if ($scale.type -eq "Minor"){$NextChord = $chordal_map | Where {$_.mode -eq "Aeolian"}}
 if ($scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locrian"}}
-$chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
-$progression = @()
 
-$progression += $NextChord.Chord_1
+$chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
+$progression = [Progression]::new()
+
+$progression.add($NextChord.Chord_1)
 $choice = 1
 $chord_counter = 0
 clear
@@ -44,7 +46,7 @@ while ($true) {
     $mode = Read-Host "Mode Chord $($chord_counter + 1)"
     
     $NextChord = $chordal_map | where {$_.mode-match $mode}
-    $progression += $NextChord."Chord_$choice"
+    $progression.add($NextChord."Chord_$choice")
     $chords = $chordal_map | where {$_."Chord_$choice" -match $($NextChord."Chord_$choice")}
     clear
 }
@@ -52,11 +54,13 @@ while ($true) {
 Write-Host "
 Scale: $(($scale.notes) -join("-"))
 Signature: $(($signature) -join("-"))
+
 ----------
 Note Progression:"
-$progression
+$progression.chords
+
 Write-Host "----------
-Numeral Progression:
-$(($progression.split('-') | where {$_ -match "i|v"}) -join ("-"))
----END---
-"
+Numeral Progression:"
+$progression.numerals
+
+Write-Host "---END---"
