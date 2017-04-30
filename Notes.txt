@@ -89,3 +89,14 @@ class Progression {
 		convert $chords
 	}
 }
+
+if ($accident -match "#|b"){
+    $filter = "^\w$accident$"
+    if ($input_scale.notes[$count] -notmatch $filter){
+        $output_scale.notes[$count] = "$($input_scale.notes[$count])" + "$accident"
+    }
+    else {
+        $output_scale.notes[$count] = $input_scale.notes[$count].substring(0,1)
+        $output_scale.notes[$count] = "$($output_scale.notes[$count])" + "$accident"
+    }
+}

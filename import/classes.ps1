@@ -36,25 +36,35 @@ class Mode {
             "Dorian"        {"Serious"}
             "Aeolian"       {"Sad"}
             "Phrygian"      {"Exotic"}
-            "Locrian"        {"Unsettling"}
+            "Locrian"       {"Unsettling"}
         }
     }
-    [array] GetScale ($change_scale) {
+    [array] GetScale ($input_scale) {
         $count = 0
+        $output_scale = Get-KeyScale -root_key $input_scale.notes[0] -scale_type $input_scale.type
         foreach ($accident in $this.accidentals.split("-")){
+            $each_note = $input_scale.notes[$count]
             if ($accident -match "#|b"){
-                $filter = "^\w$accident$"
-                if ($change_scale.notes[$count] -notmatch $filter){
-                    $change_scale.notes[$count] = "$($change_scale.notes[$count])" + "$accident"
+                if ($accident -eq "#"){
+                    if ($each_note -match "^\wb$"){
+                        $output_scale.notes[$count] = $each_note.substring(0,1)
+                    }
+                    else {
+                         $output_scale.notes[$count] = "$each_note$accident" 
+                    }
                 }
-                else {
-                    $change_scale.notes[$count] = $change_scale.notes[$count].substring(0,1)
-                    $change_scale.notes[$count] = "$($change_scale.notes[$count])" + "$accident"
+                if ($accident -eq "b"){
+                    if ($each_note -match "^\w#$"){
+                        $output_scale.notes[$count] = $each_note.substring(0,1)
+                    }
+                    else {
+                         $output_scale.notes[$count] = "$each_note$accident" 
+                    }
                 }
             }
             $count++
         }
-        return $change_scale
+        return $output_scale
     }
 }
 
