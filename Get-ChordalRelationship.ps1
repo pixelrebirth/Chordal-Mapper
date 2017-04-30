@@ -6,21 +6,24 @@ param (
 import-module .\Chordal-Mapper.psd1 -force
 
 $
-$scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
-$signature = Get-KeySignature -key_scale $scale
+$song_scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
+$signature = Get-KeySignature -key_scale $song_scale
 Write-Host "
-    Scale: $(($scale.notes) -join("-"))
+    Scale: $(($song_scale.notes) -join("-"))
     Signature: $(($signature) -join("-"))
 "
 
 try {
-    $chordal_map = Convert-ChordalMap -scale $scale
+    $chordal_map = Convert-ChordalMap -scale $song_scale
 }
-catch {$error.exception.message ; exit 1}
+catch {
+    $error.exception.message
+    exit 1
+}
 
-if ($scale.type -eq "Major"){$NextChord = $chordal_map | Where {$_.mode -eq "Ionian"}}
-if ($scale.type -eq "Minor"){$NextChord = $chordal_map | Where {$_.mode -eq "Aeolian"}}
-if ($scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locrian"}}
+if ($song_scale.type -eq "Major"){$NextChord = $chordal_map | Where {$_.mode -eq "Ionian"}}
+if ($song_scale.type -eq "Minor"){$NextChord = $chordal_map | Where {$_.mode -eq "Aeolian"}}
+if ($song_scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locrian"}}
 
 $chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
 $progression = [Progression]::new()
@@ -52,7 +55,7 @@ while ($true) {
 }
 
 Write-Host "
-Scale: $(($scale.notes) -join("-"))
+Scale: $(($song_scale.notes) -join("-"))
 Signature: $(($signature) -join("-"))
 
 ----------

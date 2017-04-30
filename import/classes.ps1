@@ -39,11 +39,24 @@ class Mode {
             "Lydian"        {"Unsettling"}
         }
     }
-    [void] GetScale ($scale) {
-        'return $scale with accidentals
-        using 
-            if (mode sharps){if (b){remove b} else {add #}}
-            if (mode flats){if (#){remove #} else {add b}}'
+    [array] GetScale ($song_scale) {
+        $count = 0
+        $mode_scale = [KeyScale]::new()
+        $this.accidentals | foreach {
+            if ($_ -match "#|b"){
+                if ($mode_scale.notes[$count] -match "\w$_$"){
+                    $mode_scale.notes[$count] = $song_scale.notes[$count].substring(0,1)
+                }
+                else {
+                    $mode_scale.notes[$count] = "$($song_scale.notes[$count])$_"
+                }
+            }
+            else {
+
+            }
+            $count++
+        }
+        return $mode_scale
     }
 }
 
@@ -73,4 +86,10 @@ class ChordMap {
     $chord_7
     $mood
     $mode
+}
+
+class KeyScale {
+    $notes
+    $type
+    $offset
 }

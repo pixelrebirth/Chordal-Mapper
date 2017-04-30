@@ -105,9 +105,3 @@ function Get-KeyScale {
     $output.offset = $count
     return $output
 }
-
-class KeyScale {
-    $notes
-    $type
-    $offset
-}
