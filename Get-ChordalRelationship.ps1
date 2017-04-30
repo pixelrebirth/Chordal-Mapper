@@ -5,7 +5,6 @@ param (
 
 import-module .\Chordal-Mapper.psd1 -force
 
-$
 $song_scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
 $signature = Get-KeySignature -key_scale $song_scale
 Write-Host "
@@ -14,7 +13,7 @@ Write-Host "
 "
 
 try {
-    $chordal_map = Convert-ChordalMap -scale $song_scale
+    $chordal_map = Convert-ChordalMap -song_scale $song_scale
 }
 catch {
     $error.exception.message

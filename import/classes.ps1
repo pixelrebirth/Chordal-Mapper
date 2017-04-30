@@ -13,7 +13,7 @@ class Mode {
             "Dorian"        {"--b----b"}
             "Aeolian"       {"--b---b-b"}
             "Phrygian"      {"-b-b---b-b"}
-            "Lydian"        {"-b-b--b-b-b"}
+            "Locrian"        {"-b-b--b-b-b"}
         }
         $this.type = switch -regex ($name) {
             "Lydian|Ionian|Mixolydian"  {"Major"}
@@ -36,27 +36,23 @@ class Mode {
             "Dorian"        {"Serious"}
             "Aeolian"       {"Sad"}
             "Phrygian"      {"Exotic"}
-            "Lydian"        {"Unsettling"}
+            "Locrian"        {"Unsettling"}
         }
     }
     [array] GetScale ($song_scale) {
         $count = 0
-        $mode_scale = [KeyScale]::new()
-        $this.accidentals | foreach {
-            if ($_ -match "#|b"){
-                if ($mode_scale.notes[$count] -match "\w$_$"){
-                    $mode_scale.notes[$count] = $song_scale.notes[$count].substring(0,1)
+        foreach ($accident in $this.accidentals.split("-")){
+            if ($accident -match "#|b"){
+                if ($song_scale.notes[$count] -match "\w$accident$"){
+                    $song_scale.notes[$count] = $song_scale.notes[$count].substring(0,1)
                 }
                 else {
-                    $mode_scale.notes[$count] = "$($song_scale.notes[$count])$_"
+                    $song_scale.notes[$count] = "$($song_scale.notes[$count])$accident"
                 }
-            }
-            else {
-
             }
             $count++
         }
-        return $mode_scale
+        return $song_scale
     }
 }
 
@@ -86,6 +82,7 @@ class ChordMap {
     $chord_7
     $mood
     $mode
+    $type
 }
 
 class KeyScale {
