@@ -25,9 +25,9 @@ if ($song_scale.type -eq "Minor"){$NextChord = $chordal_map | Where {$_.mode -eq
 if ($song_scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locrian"}}
 
 $chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
-$progression = [Progression]::new()
+$progression = New-ChordProgression
 
-$progression.add($NextChord.Chord_1)
+$progression.add($NextChord.Chord_1) | out-null
 $choice = 1
 $chord_counter = 0
 clear
@@ -35,7 +35,7 @@ clear
 while ($true) {
     $chord_counter++
     Write-host "`nPrevious Chords:`n"
-    $Progression
+    $progression.chords
     Write-Host "`n`tCadence Chart" -f yellow
     Get-Cadence
 
@@ -47,8 +47,8 @@ while ($true) {
 
     $mode = Read-Host "Mode Chord $($chord_counter + 1)"
     
-    $NextChord = $chordal_map | where {$_.mode-match $mode}
-    $progression.add($NextChord."Chord_$choice")
+    $NextChord = $chordal_map | where {$_.mode -match "^$mode$"}
+    $progression.add($NextChord."Chord_$choice") | out-null
     $chords = $chordal_map | where {$_."Chord_$choice" -match $($NextChord."Chord_$choice")}
     clear
 }
