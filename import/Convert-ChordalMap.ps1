@@ -5,6 +5,7 @@ function Convert-ChordalMap {
     $allChords = @()
 
     foreach ($each_name in $mode_names){
+        $notes = @()
         $current_mode = [Mode]::new($each_name)
         $mode_scale = $current_mode.GetScale($song_scale)
         $chord_per_mode = [ChordMap]::new()
