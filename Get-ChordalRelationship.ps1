@@ -42,7 +42,7 @@ while ($true) {
     $chords | select  Mode,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mood | ft
     $NextNumber = Get-NextChord -CurrentChord $choice
 
-    $choice = Read-Host "Next Chord: $NextNumber"
+    $choice = Read-Host "Next Chord (x to quit): $NextNumber"
     if ($choice -eq "x"){break}
 
     $mode = Read-Host "Mode Chord $($chord_counter + 1)"

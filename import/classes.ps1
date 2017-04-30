@@ -39,20 +39,22 @@ class Mode {
             "Locrian"        {"Unsettling"}
         }
     }
-    [array] GetScale ($song_scale) {
+    [array] GetScale ($change_scale) {
         $count = 0
         foreach ($accident in $this.accidentals.split("-")){
             if ($accident -match "#|b"){
-                if ($song_scale.notes[$count] -match "\w$accident$"){
-                    $song_scale.notes[$count] = $song_scale.notes[$count].substring(0,1)
+                $filter = "^\w$accident$"
+                if ($change_scale.notes[$count] -notmatch $filter){
+                    $change_scale.notes[$count] = "$($change_scale.notes[$count])" + "$accident"
                 }
                 else {
-                    $song_scale.notes[$count] = "$($song_scale.notes[$count])$accident"
+                    $change_scale.notes[$count] = $change_scale.notes[$count].substring(0,1)
+                    $change_scale.notes[$count] = "$($change_scale.notes[$count])" + "$accident"
                 }
             }
             $count++
         }
-        return $song_scale
+        return $change_scale
     }
 }
 
