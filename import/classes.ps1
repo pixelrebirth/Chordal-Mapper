@@ -95,6 +95,7 @@ class ChordMap {
     $mood
     $mode
     $type
+    $index
 }
 
 class KeyScale {

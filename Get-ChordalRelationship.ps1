@@ -39,15 +39,15 @@ while ($true) {
     Write-Host "`n`tCadence Chart" -f yellow
     Get-Cadence
 
-    $chords | select  Mode,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mood | ft
+    $chords | select  Index,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mode,Mood | ft
     $NextNumber = Get-NextChord -CurrentChord $choice
 
-    $choice = Read-Host "Next Chord (x to quit): $NextNumber"
+    $choice = Read-Host "Next Chord Number (column) (x to quit): $NextNumber"
     if ($choice -eq "x"){break}
 
-    $mode = Read-Host "Mode Chord $($chord_counter + 1)"
+    $index = Read-Host "Choose Index Number (row) for progression: $($chord_counter + 1)"
     
-    $NextChord = $chordal_map | where {$_.mode -match "^$mode$"}
+    $NextChord = $chordal_map | where {$_.index -eq $index}
     $progression.add($NextChord."Chord_$choice") | out-null
     $chords = $chordal_map | where {$_."Chord_$choice" -match $($NextChord."Chord_$choice")}
     clear
