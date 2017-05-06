@@ -24,11 +24,7 @@ catch {
 
 $chordal_map
 $chords = $chordal_map
-# if ($song_scale.type -eq "Major"){$NextChord = $chordal_map | Where {$_.mode -eq "Ionian"}}
-# if ($song_scale.type -eq "Minor"){$NextChord = $chordal_map | Where {$_.mode -eq "Aeolian"}}
-# if ($song_scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locrian"}}
 
-# $chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
 $progression = New-ChordProgression
 
 $choice = 1
