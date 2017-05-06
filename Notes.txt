@@ -1,0 +1,102 @@
+Get-ChordalRelationship -root D -primary_mode [Major/Minor/Dim] 
+
+KeySignature: 
+Scale:
+Major Modes:
+	B#,D#,E# - Lydian
+ 	 	 - Mixolydian
+Minor Modes:
+
+
+Chords:
+I ii iii IV V vi vii* - Ionian
+
+Using black keys makes the music less predictable subconsciously
+If there is a whole setp at the end, use a half step to improve resolution from 7 to 8
+You can play it with more velocity to force resolution
+Avoid the 4th note in a melody, it usually doesnt sound good
+7th note in a melody should resolve to 1 if semitone away
+
+Key C and Key B are the most predictable key signatures
+
+
+Add Blues
+Fix Sharps/Flats
+
+Cannot play ionian and lydian on top of each other
+
+
+Ask, 
+Do you want to add energy or take it away? (up chords, down chords)
+Do you want to shift moods of the song? (available options based on the last chord matches)
+To what degree subtle/normal/aggressive/octave first invert, normal, second invert, octave
+How much change? (chord steps possible)
+
+
+lydian:---#----
+
+scale: C#,D#,E#,F#
+
+if (mode sharps){if (b){remove b} else {add #}}
+if (mode flats){if (#){remove #} else {add b}}
+
+class Mode {
+    $type
+    $name
+    $accidentals
+    $chords
+    $mood
+    Mode ($name){
+        $this.name = $name
+        $this.accidentals = switch ($name) {
+            "Lydian" {"---#----"}
+        }
+        $this.type = switch -regex ($name) {
+            "Lydian|Ionian|Mixolydian" {"Major"}
+        }
+        $this.chords = switch ($name) {
+            "Lydian" {@("I","ii"...}
+        }
+        $this.mood = switch ($name) {
+            "Lydian" {"Ethereal"}
+        }
+    }
+    [void] GetScale ($scale) {
+        return $scale with accidentals
+        using 
+            if (mode sharps){if (b){remove b} else {add #}}
+            if (mode flats){if (#){remove #} else {add b}}
+    }
+}
+
+$majorscale = Get-KeyScale -root_ ...
+$lydian = [Mode]::new("Lydian")
+$Mixolydian = 
+
+if major
+	$scale = $Lydian.GetScale($majorscale)
+	$scale[0]-$scale[2]-$scale[4]-$scale[6]
+
+	$scale = $Mixolydian.GetScale($majorscale)
+	$scale[0]-$scale[2]-$scale[4]-$scale[6]
+
+if minor
+
+class Progression {
+	[array]$chords
+	
+	[void] RecordMidi {
+		convert $chords
+	}
+}
+
+if ($accident -match "#|b"){
+    $filter = "^\w$accident$"
+    if ($input_scale.notes[$count] -notmatch $filter){
+        $output_scale.notes[$count] = "$($input_scale.notes[$count])" + "$accident"
+    }
+    else {
+        $output_scale.notes[$count] = $input_scale.notes[$count].substring(0,1)
+        $output_scale.notes[$count] = "$($output_scale.notes[$count])" + "$accident"
+    }
+}

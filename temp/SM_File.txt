@@ -1,0 +1,18 @@
+dev LoopBe Internal MIDI
+cc 117 127
+clock 50
+on dec 72 64
+on dec 76 64
+on dec 79 64
+clock 50
+off dec 72 64
+off dec 76 64
+off dec 79 64
+on dec 76 64
+on dec 79 64
+on dec 83 64
+clock 50
+off dec 76 64
+off dec 79 64
+off dec 83 64
+cc 114 127

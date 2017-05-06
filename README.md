@@ -1,2 +1,6 @@
 # Chordal-Mapper
-A Chord converter so I can play lazy music on white keys in different modes
+A chord map generator that outputs a midi data stream
+
+- Requires LoopBe to be installed for now until I can make this user settable
+- This is currently using SendMidi.exe which is from gbevin on github
+

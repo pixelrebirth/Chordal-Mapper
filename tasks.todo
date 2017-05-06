@@ -1,0 +1,21 @@
+☐ Plan to add an input key that will offset the root note
+☐ Plan to remove 'secondary' display and options (in favor of a fully populated object)
+☐ Fix sharps and flats to work correctly based on circle of fifths
+☐ Change output to display:
+    ☐ Key Signature
+    ☐ Scale
+    ☐ Chord Numerals
+    ☐ Current Chord Map 
+☐ Plan to add simple chord questionaire
+☐ Plan to add advanced modal chord questionaire
+    ☐ Based on the current chord you are in, and pattern
+    ☐ Can only shift modes if the chord you are in matches in the other modes
+        ☐ CEDG in Ionian start and CEDG in Mixolydian match therefor -- you can then play Mixolydian on the next chords until there is a match with Ionian again
+        ☐ Follow the Chord Map
+        ☐ Give SUS a try!
+☐ Melody writing rules
+    ☐ If in the chord triad it is resolved, tonic being the most final
+    ☐ If not the chord triad it is unresolved to different degrees based on dissonence with the triad
+    ☐ Write out characteristics of the 7 tones on the last note
+    ☐ Rhythm is based on timing signature pick based on templates
+✔ Play the Midi- maybe provide midi input to Ableton @done (4/16/2017, 11:48:45 PM)
