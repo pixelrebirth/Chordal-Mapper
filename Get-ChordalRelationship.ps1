@@ -6,28 +6,31 @@ param (
 import-module .\Chordal-Mapper.psd1 -force
 
 $song_scale = Get-KeyScale -root_key $root_key -scale_type $scale_type
+$ionian_scale = Get-KeyScale -root_key $root_key -scale_type 'Major'
 $signature = Get-KeySignature -key_scale $song_scale
+
 Write-Host "
     Scale: $(($song_scale.notes) -join("-"))
     Signature: $(($signature) -join("-"))
 "
 
 try {
-    $chordal_map = Convert-ChordalMap -song_scale $song_scale
+    $chordal_map = Convert-ChordalMap -ionian_scale $ionian_scale
 }
 catch {
     $error.exception.message
     exit 1
 }
 
-if ($song_scale.type -eq "Major"){$NextChord = $chordal_map | Where {$_.mode -eq "Ionian"}}
-if ($song_scale.type -eq "Minor"){$NextChord = $chordal_map | Where {$_.mode -eq "Aeolian"}}
-if ($song_scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locrian"}}
+$chordal_map
+$chords = $chordal_map
+# if ($song_scale.type -eq "Major"){$NextChord = $chordal_map | Where {$_.mode -eq "Ionian"}}
+# if ($song_scale.type -eq "Minor"){$NextChord = $chordal_map | Where {$_.mode -eq "Aeolian"}}
+# if ($song_scale.type -eq "Dim"){$NextChord = $chordal_map | Where {$_.mode -eq "Locrian"}}
 
-$chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
+# $chords = $chordal_map | where {$_."Chord_1" -match $($NextChord."Chord_1")}
 $progression = New-ChordProgression
 
-$progression.add($NextChord.Chord_1) | out-null
 $choice = 1
 $chord_counter = 0
 clear
@@ -42,7 +45,7 @@ while ($true) {
     $chords | select  Index,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mode,Mood | ft
     $NextNumber = Get-NextChord -CurrentChord $choice
 
-    $choice = Read-Host "Next Chord Number (column) (x to quit): $NextNumber"
+    $choice = Read-Host "Next Chord Number (column) (x to quit): Chord_<$NextNumber>"
     if ($choice -eq "x"){break}
 
     $index = Read-Host "Choose Index Number (row) for progression: $($chord_counter + 1)"
@@ -54,6 +57,8 @@ while ($true) {
 }
 
 Write-Host "
+Key: $($song_scale.notes[0])
+Type: $($song_scale.type)
 Scale: $(($song_scale.notes) -join("-"))
 Signature: $(($signature) -join("-"))
 
@@ -61,8 +66,8 @@ Signature: $(($signature) -join("-"))
 Note Progression:"
 $progression.chords
 
-Write-Host "----------
+Write-Host "`n----------
 Numeral Progression:"
 $progression.numerals
 
-Write-Host "---END---"
+Write-Host "`n---END---"

@@ -100,7 +100,9 @@ function Get-KeyScale {
     }
 
     $output = [KeyScale]::new()
-    $output.notes = $scale_notes[$count..6] + $scale_notes[0..$($count-1)]
+    if ($count -eq 0){$output.notes = $scale_notes}
+    else {$output.notes = $scale_notes[$count..6] + $scale_notes[0..$($count-1)]}
+    
     $output.type = $scale_type
     $output.offset = $count
     return $output

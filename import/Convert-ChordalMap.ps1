@@ -1,5 +1,5 @@
 function Convert-ChordalMap {
-    param ($song_scale)
+    param ($ionian_scale)
 
     $mode_names = @('Lydian','Ionian','Mixolydian','Dorian','Aeolian','Phrygian','Locrian')
     $allChords = @()
@@ -9,7 +9,7 @@ function Convert-ChordalMap {
         $index_count++
         $notes = @()
         $current_mode = [Mode]::new($each_name)
-        $mode_scale = $current_mode.GetScale($song_scale)
+        $mode_scale = $current_mode.GetScale($ionian_scale)
         $chord_per_mode = [ChordMap]::new()
         1..5 | foreach {$notes += $mode_scale.notes}
         
