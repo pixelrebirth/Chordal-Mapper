@@ -79,9 +79,34 @@ class Progression {
         $this.chords += $InputChord
         $this.numerals = ($this.chords.split('-') | where {$_ -match "i|v"}) -join ("-")
     }
-	[void] RecordMidi () {
-		'convert $chords'
-	}
+}
+
+class MidiHandler {
+    $midi_output = @()
+    [void] MidiFromChord ($chord, $octave = 0) {
+        $chord_array = $chord.split("-")
+        $chord_array = $chord_array[0..$($chord_array-1)]
+
+        foreach ($note in $chord_array){
+            $midi_note = switch ($note) {
+                "A"     {69}
+                "A#|Bb" {70}
+                "B"     {71}
+                "C"     {72}
+                "C#|Db" {73}
+                "D"     {74}
+                "D#|Eb" {75}
+                "E"     {76}
+                "F"     {77}
+                "F#|Gb" {78}
+                "G"     {79}
+                "G#|Ab" {80}
+            }
+            $midi_note += ($octave * 12)
+            $this.midi_output += $midi_note
+        }
+        
+    }
 }
 
 class ChordMap {
