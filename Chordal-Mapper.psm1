@@ -1,3 +1,3 @@
 $ModulePath = $PSScriptRoot
 $AllFiles = Get-ChildItem -Path "$ModulePath/Libraries/*.ps1" -Recurse
-$AllFiles | ForEach {. $_}
+$AllFiles | ForEach {. $Input}

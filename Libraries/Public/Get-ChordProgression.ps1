@@ -25,6 +25,9 @@ function Get-ChordProgression {
         
         .EXAMPLE
         Get-ChordProgression -RootKey C# -ScaleType Minor
+
+        .LINK
+        https://github.com/pixelrebirth/Chordal-Mapper
     #>
     [CmdletBinding()]
     param (
@@ -53,83 +56,89 @@ function Get-ChordProgression {
             "Gb"
             )
         ]
-        $RootKey,
+        [string]$RootKey,
         
         [Parameter(Mandatory=$true)]
         [ValidateSet("Major","Minor","Dim")]
-        $ScaleType
+        [string]$ScaleType
     )
-    # Import-Module ..\..\Chordal-Mapper.psd1 -force
 
-    $SongScale   = Get-KeyScale -RootKey $RootKey -ScaleType $ScaleType
-    $IonianScale = Get-KeyScale -RootKey $RootKey -ScaleType 'Major'
-    $KeySignature = Get-KeySignature -KeyScale $SongScale
+    begin {
+        $SongScale   = Get-KeyScale -RootKey $RootKey -ScaleType $ScaleType
+        $IonianScale = Get-KeyScale -RootKey $RootKey -ScaleType 'Major'
+        $KeySignature = Get-KeySignature -KeyScale $SongScale
 
-    try {
-        $ChordalMap = Convert-ChordalMap -IonianScale $IonianScale
-    }
-    catch {
-        $Error.Exception.Message
-        Exit 1
-    }
-
-    Write-Verbose -message "Outputing chordal map object to stdout..."
-    $ChordalMap
-    $FilteredChords = $ChordalMap
-
-    $ProgressionObject = New-Object -TypeName Progression
-
-    $ChordNumber = 1
-    $chordcounter = 0
-    clear
-
-    while ($true) {
-        Write-Host "
-            Scale: $(($SongScale.notes) -join("-"))
-            Signature: $(($KeySignature) -join("-"))
-        "
-
-        Write-Host -ForegroundColor yellow "
-            Cadence Chart
-            --------------------------
-            1-5  = Imperfect --
-            5-6  = Deceptive -
-            2-5  = Half -
-            4-5  = Imperfect -
-            Rest = Rhythmic +
-            7-1  = Backdoor +
-            4-1  = Plagal +
-            5-1  = Perfect ++
-        "
-
-        Write-host "`nProgression:`n"
-        $ProgressionObject.chords
-
-        $FilteredChords | Select-Object Index,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mode,Mood | Format-Table
-        $ChordSuggestions = Get-NextChord -CurrentChord $ChordNumber
-
-        $ChordNumber = Read-Host "Next Chord Number (Column in table) (x to end progression)`nSuggestions: $ChordSuggestions"
-        if ($ChordNumber -eq "x"){
-            Write-Verbose -message "Breaking the loop that holds the program open asking for chords."
-            Break
+        try {
+            $ChordalMap = Convert-ChordalMap -IonianScale $IonianScale
+        }
+        catch {
+            Return $Error.Exception.Message
         }
 
-        $RowIndex = Read-Host "Choose Index Number (Row in table) for progression:"
-        
-        $NextChord = $ChordalMap | where {$_.index -eq $RowIndex}
-        $ProgressionObject.add($NextChord."Chord_$ChordNumber") | out-null
-        $FilteredChords = $ChordalMap | where {$_."Chord_$ChordNumber" -match $($NextChord."Chord_$ChordNumber")}
+        Write-Verbose -message "Outputing chordal map object to stdout..."
+        $ChordalMap
+        $FilteredChords = $ChordalMap
+
+        $ProgressionObject = New-Object -TypeName Progression
+
+        $ChordNumber = 1
+        $chordcounter = 0
         Clear-Host
     }
-    
-    Clear-Host
-    Write-Host "
-Key:        $($SongScale.notes[0])
-Type:       $($SongScale.type)
-Scale:      $(($SongScale.notes) -join("-"))
-Signature:  $(($KeySignature) -join("-"))
-Progression:   $($ProgressionObject.numerals)
-Progression Notes:"
-    $ProgressionObject.chords
-    Write-Host ""
+
+    process {
+        while ($true) {
+            Write-Host "
+                Scale: $(($SongScale.notes) -join("-"))
+                Signature: $(($KeySignature) -join("-"))
+            "
+
+            Write-Host -ForegroundColor yellow "
+                Cadence Chart
+                --------------------------
+                1-5  = Imperfect --
+                5-6  = Deceptive -
+                2-5  = Half -
+                4-5  = Imperfect -
+                Rest = Rhythmic +
+                7-1  = Backdoor +
+                4-1  = Plagal +
+                5-1  = Perfect ++
+            "
+
+            Write-host "`nProgression:`n"
+            $ProgressionObject.chords
+
+            $FilteredChords | Select-Object Index,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mode,Mood | Format-Table
+            $ChordSuggestions = Get-NextChord -CurrentChord $ChordNumber
+
+            $ChordNumber = Read-Host "Next Chord Number (Column in table) (x to end progression)`nSuggestions: $ChordSuggestions"
+            if ($ChordNumber -eq "x"){
+                Write-Verbose -message "Breaking the loop that holds the program open asking for chords."
+                Break
+            }
+
+            $RowIndex = Read-Host "Choose Index Number (Row in table) for progression"
+            
+            $NextChord = $ChordalMap | where {$Input.index -eq $RowIndex}
+            $ProgressionObject.add($NextChord."Chord_$ChordNumber") | out-null
+            $FilteredChords = $ChordalMap | where {$Input."Chord_$ChordNumber" -match $($NextChord."Chord_$ChordNumber")}
+            Clear-Host
+        }
+    }
+
+    end {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "Key:        $($SongScale.notes[0])"
+        Write-Host "Type:       $($SongScale.type)"
+        Write-Host "Scale:      $(($SongScale.notes) -join("-"))"
+        Write-Host "Signature:  $(($KeySignature) -join("-"))"
+        Write-Host "Progression:   $($ProgressionObject.numerals)"
+        Write-Host ""
+        
+        $ProgressionObject.chords
+        Write-Host ""
+    }
 }

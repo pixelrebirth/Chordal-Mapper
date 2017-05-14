@@ -78,7 +78,7 @@ class Progression {
     }
     [void] Add ($InputChord) {
         $this.Chords += $InputChord
-        $this.Numerals = ($this.Chords.split('-') | where {$_ -match "i|v"}) -join ("-")
+        $this.Numerals = ($this.Chords.split('-') | where {$Input -match "i|v"}) -join ("-")
     }
 }
 

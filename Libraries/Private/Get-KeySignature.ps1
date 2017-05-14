@@ -3,5 +3,5 @@ function Get-KeySignature {
         [CmdletBinding()]
         $KeyScale
     )
-    return $KeyScale.notes | where {$_ -match "\wb|\w#"}
+    return $KeyScale.notes | where {$Input -match "\wb|\w#"}
 }
