@@ -1,12 +1,35 @@
 function Get-KeyScale {
     param (
         [CmdletBinding()]
-        [ValidateSet("A#","B#", "C#", "D#", "E#", "F#", "G#", "A","B", "C", "D", "E", "F", "G", "Ab","Bb", "Cb", "Db", "Eb", "Fb", "Gb")]$root_key,
-        [ValidateSet("Major","Minor","Dim")]$scale_type
+        [ValidateSet(
+            "A#",
+            "B#", 
+            "C#", 
+            "D#", 
+            "E#", 
+            "F#", 
+            "G#", 
+            "A",
+            "B", 
+            "C", 
+            "D", 
+            "E", 
+            "F", 
+            "G", 
+            "Ab",
+            "Bb", 
+            "Cb", 
+            "Db", 
+            "Eb", 
+            "Fb", 
+            "Gb"
+            )
+        ]$RootKey,
+        [ValidateSet("Major","Minor","Dim")]$ScaleType
     )
 
-    if ($scale_type -eq "Major"){
-        $root_number = switch ($root_key) {
+    if ($ScaleType -eq "Major"){
+        $RootNumber = switch ($RootKey) {
             "C" {0}
             "G" {1}
             "D" {2}
@@ -26,8 +49,8 @@ function Get-KeyScale {
         }
     }
     
-    if ($scale_type -eq "Minor"){
-        $root_number = switch ($root_key) {
+    if ($ScaleType -eq "Minor"){
+        $RootNumber = switch ($RootKey) {
             "A" {0}
             "E" {1}
             "B" {2}
@@ -47,8 +70,8 @@ function Get-KeyScale {
         }
     }
 
-    if ($scale_type -eq "Dim"){
-        $root_number = switch ($root_key) {
+    if ($ScaleType -eq "Dim"){
+        $RootNumber = switch ($RootKey) {
             "B" {0}
             "F#" {1}
             "C#" {2}
@@ -68,10 +91,10 @@ function Get-KeyScale {
         }
     }
 
-    $key_diff = $root_number
-    if ($key_diff -gt 14){$key_diff = $key_diff - 14}
+    $KeyDiff = $RootNumber
+    if ($KeyDiff -gt 14){$KeyDiff = $KeyDiff - 14}
 
-    $signature =  switch ($key_diff) {
+    $Signature =  switch ($KeyDiff) {
         "0" {"F,C,G,D,A,E,B"}
         "1" {"F#,C,G,D,A,E,B"}
         "2" {"F#,C#,G,D,A,E,B"}
@@ -87,23 +110,27 @@ function Get-KeyScale {
         "12" {"Bb,Eb,Ab,D,G,C,F"}
         "13" {"Bb,Eb,A,D,G,C,F"}
         "14" {"Bb,E,A,D,G,C,F"}
-        default {throw "Key: $root_key not on circle of fifths for scale: $scale_type" ; exit 1}
+        default {throw "Key: $RootKey not on circle of fifths for scale: $ScaleType" ; exit 1}
     }
 
-    $count = 0
-    $scale_notes = [array]$signature.split(",") | sort
-    foreach ($note in [array]$scale_notes.split(",")){
-        if ($note -eq $root_key){
+    $Count = 0
+    $ScaleNotes = [array]$Signature.split(",") | sort
+    foreach ($note in [array]$ScaleNotes.split(",")){
+        if ($note -eq $RootKey){
             break
         }
-        $count++
+        $Count++
     }
 
-    $output = [KeyScale]::new()
-    if ($count -eq 0){$output.notes = $scale_notes}
-    else {$output.notes = $scale_notes[$count..6] + $scale_notes[0..$($count-1)]}
+    $Output = [KeyScale]::new()
+    if ($Count -eq 0){
+        $Output.notes = $ScaleNotes
+    }
+    else {
+        $Output.notes = $ScaleNotes[$Count..6] + $ScaleNotes[0..$($Count-1)]
+    }
     
-    $output.type = $scale_type
-    $output.offset = $count
-    return $output
+    $Output.type = $ScaleType
+    $Output.offset = $Count
+    return $Output
 }
