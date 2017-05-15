@@ -5,7 +5,7 @@ class Mode {
     $Voice
     $Mood
     
-    Mode ($Name){
+    Mode ($Name) {
         $this.Name = $Name
         $this.Accidentals = switch ($Name) {
             "Lydian"        {"---#---"}
@@ -22,44 +22,44 @@ class Mode {
             "Locrian"                   {"Dim"}
         }
         $this.Voice = switch ($Name) {
-            "Ionian"        {@("I","ii","iii","IV","V","vi","vii*")}
-            "Dorian"        {@("i","ii","III","IV","v","vi*","VII")}
-            "Phrygian"      {@("i","II","III","iv","v*","VI","vii")}
-            "Lydian"        {@("I","II","iii","iv*","V","vi","vii")}
-            "Mixolydian"    {@("I","ii","iii*","IV","v","vi","VII")}
-            "Aeolian"       {@("i","ii*","III","iv","v","VI","VII")}
-            "Locrian"       {@("i*","II","iii","iv","V","VI","vii")}
+            "Ionian"     {@("I", "ii", "iii", "IV", "V", "vi", "vii*")}
+            "Dorian"     {@("i", "ii", "III", "IV", "v", "vi*", "VII")}
+            "Phrygian"   {@("i", "II", "III", "iv", "v*", "VI", "vii")}
+            "Lydian"     {@("I", "II", "iii", "iv*", "V", "vi", "vii")}
+            "Mixolydian" {@("I", "ii", "iii*", "IV", "v", "vi", "VII")}
+            "Aeolian"    {@("i", "ii*", "III", "iv", "v", "VI", "VII")}
+            "Locrian"    {@("i*", "II", "iii", "iv", "V", "VI", "vii")}
         }
         $this.Mood = switch ($Name) {
-            "Lydian"        {"Ethereal"}
-            "Ionian"        {"Happy"}
-            "Mixolydian"    {"Peaceful"}
-            "Dorian"        {"Serious"}
-            "Aeolian"       {"Sad"}
-            "Phrygian"      {"Exotic"}
-            "Locrian"       {"Unsettling"}
+            "Lydian"     {"Ethereal"}
+            "Ionian"     {"Happy"}
+            "Mixolydian" {"Peaceful"}
+            "Dorian"     {"Serious"}
+            "Aeolian"    {"Sad"}
+            "Phrygian"   {"Exotic"}
+            "Locrian"    {"Unsettling"}
         }
     }
     [array] GetScale ($InputScale) {
         $Count = 0
         $OutputScale = Get-KeyScale -rootkey $InputScale.Notes[0] -scaleType $InputScale.Type
-        foreach ($Accident in $this.Accidentals.split("-")){
+        foreach ($Accident in $this.Accidentals.split("-")) {
             $EachNote = $InputScale.Notes[$Count]
-            if ($Accident -match "#|b"){
-                if ($Accident -eq "#"){
-                    if ($EachNote -match "^\wb$"){
-                        $OutputScale.Notes[$Count] = $EachNote.substring(0,1)
+            if ($Accident -match "#|b") {
+                if ($Accident -eq "#") {
+                    if ($EachNote -match "^\wb$") {
+                        $OutputScale.Notes[$Count] = $EachNote.substring(0, 1)
                     }
                     else {
-                         $OutputScale.Notes[$Count] = "$EachNote$Accident" 
+                        $OutputScale.Notes[$Count] = "$EachNote$Accident" 
                     }
                 }
-                if ($Accident -eq "b"){
-                    if ($EachNote -match "^\w#$"){
-                        $OutputScale.Notes[$Count] = $EachNote.substring(0,1)
+                if ($Accident -eq "b") {
+                    if ($EachNote -match "^\w#$") {
+                        $OutputScale.Notes[$Count] = $EachNote.substring(0, 1)
                     }
                     else {
-                         $OutputScale.Notes[$Count] = "$EachNote$Accident" 
+                        $OutputScale.Notes[$Count] = "$EachNote$Accident" 
                     }
                 }
             }
@@ -70,7 +70,7 @@ class Mode {
 }
 
 class Progression {
-	[array]$Chords
+    [array]$Chords
     [string]$Numerals
 
     Progression () {
@@ -86,9 +86,9 @@ class MidiHandler {
     $MidiOutput = @()
     [void] MidiFromChord ($Chord, $Octave = 0) {
         $ChordArray = $Chord.split("-")
-        $ChordArray = $ChordArray[0..$($ChordArray-1)]
+        $ChordArray = $ChordArray[0..$($ChordArray - 1)]
 
-        foreach ($Note in $ChordArray){
+        foreach ($Note in $ChordArray) {
             $MidiNote = switch ($Note) {
                 "A"     {69}
                 "A#|Bb" {70}

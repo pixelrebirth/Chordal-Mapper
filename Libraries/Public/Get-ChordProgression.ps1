@@ -31,7 +31,7 @@ function Get-ChordProgression {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet(
             "A#",
             "B#", 
@@ -54,17 +54,17 @@ function Get-ChordProgression {
             "Eb", 
             "Fb", 
             "Gb"
-            )
+        )
         ]
         [string]$RootKey,
         
-        [Parameter(Mandatory=$true)]
-        [ValidateSet("Major","Minor","Dim")]
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("Major", "Minor", "Dim")]
         [string]$ScaleType
     )
 
     begin {
-        $SongScale   = Get-KeyScale -RootKey $RootKey -ScaleType $ScaleType
+        $SongScale = Get-KeyScale -RootKey $RootKey -ScaleType $ScaleType
         $IonianScale = Get-KeyScale -RootKey $RootKey -ScaleType 'Major'
         $KeySignature = Get-KeySignature -KeyScale $SongScale
 
@@ -109,11 +109,11 @@ function Get-ChordProgression {
             Write-host "`nProgression:`n"
             $ProgressionObject.chords
 
-            $FilteredChords | Select-Object Index,Chord_1,Chord_2,Chord_3,Chord_4,Chord_5,Chord_6,Chord_7,Mode,Mood | Format-Table
+            $FilteredChords | Select-Object Index, Chord_1, Chord_2, Chord_3, Chord_4, Chord_5, Chord_6, Chord_7, Mode, Mood | Format-Table
             $ChordSuggestions = Get-NextChord -CurrentChord $ChordNumber
 
             $ChordNumber = Read-Host "Next Chord Number (Column in table) (x to end progression)`nSuggestions: $ChordSuggestions"
-            if ($ChordNumber -eq "x"){
+            if ($ChordNumber -eq "x") {
                 Write-Verbose -message "Breaking the loop that holds the program open asking for chords."
                 Break
             }

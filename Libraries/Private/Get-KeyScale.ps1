@@ -23,12 +23,12 @@ function Get-KeyScale {
             "Eb", 
             "Fb", 
             "Gb"
-            )
+        )
         ]$RootKey,
-        [ValidateSet("Major","Minor","Dim")]$ScaleType
+        [ValidateSet("Major", "Minor", "Dim")]$ScaleType
     )
 
-    if ($ScaleType -eq "Major"){
+    if ($ScaleType -eq "Major") {
         $RootNumber = switch ($RootKey) {
             "C" {0}
             "G" {1}
@@ -49,7 +49,7 @@ function Get-KeyScale {
         }
     }
     
-    if ($ScaleType -eq "Minor"){
+    if ($ScaleType -eq "Minor") {
         $RootNumber = switch ($RootKey) {
             "A" {0}
             "E" {1}
@@ -70,7 +70,7 @@ function Get-KeyScale {
         }
     }
 
-    if ($ScaleType -eq "Dim"){
+    if ($ScaleType -eq "Dim") {
         $RootNumber = switch ($RootKey) {
             "B" {0}
             "F#" {1}
@@ -92,9 +92,9 @@ function Get-KeyScale {
     }
 
     $KeyDiff = $RootNumber
-    if ($KeyDiff -gt 14){$KeyDiff = $KeyDiff - 14}
+    if ($KeyDiff -gt 14) {$KeyDiff = $KeyDiff - 14}
 
-    $Signature =  switch ($KeyDiff) {
+    $Signature = switch ($KeyDiff) {
         "0" {"F,C,G,D,A,E,B"}
         "1" {"F#,C,G,D,A,E,B"}
         "2" {"F#,C#,G,D,A,E,B"}
@@ -115,19 +115,19 @@ function Get-KeyScale {
 
     $Count = 0
     $ScaleNotes = [array]$Signature.split(",") | sort
-    foreach ($note in [array]$ScaleNotes.split(",")){
-        if ($note -eq $RootKey){
+    foreach ($note in [array]$ScaleNotes.split(",")) {
+        if ($note -eq $RootKey) {
             break
         }
         $Count++
     }
 
     $Output = [KeyScale]::new()
-    if ($Count -eq 0){
+    if ($Count -eq 0) {
         $Output.notes = $ScaleNotes
     }
     else {
-        $Output.notes = $ScaleNotes[$Count..6] + $ScaleNotes[0..$($Count-1)]
+        $Output.notes = $ScaleNotes[$Count..6] + $ScaleNotes[0..$($Count - 1)]
     }
     
     $Output.type = $ScaleType

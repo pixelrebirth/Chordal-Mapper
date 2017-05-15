@@ -1,11 +1,11 @@
 function Convert-ChordalMap {
     param ($IonianScale)
 
-    $ModeNames = @('Lydian','Ionian','Mixolydian','Dorian','Aeolian','Phrygian','Locrian')
+    $ModeNames = @('Lydian', 'Ionian', 'Mixolydian', 'Dorian', 'Aeolian', 'Phrygian', 'Locrian')
     $AllChords = @()
     $IndexCount = 0
 
-    foreach ($EachName in $ModeNames){
+    foreach ($EachName in $ModeNames) {
         $IndexCount++
         $Notes = @()
         $CurrentMode = [Mode]::new($EachName)
@@ -16,7 +16,7 @@ function Convert-ChordalMap {
         1..7 | foreach {
             $Num = $_
             $BaseNote = $Num - 1
-            $ChordPerMode."chord_$Num" = $($Notes[$BaseNote]) + "-" + $($Notes[($BaseNote+2)]) + "-" + $($Notes[($BaseNote+4)]) + "-" + $($Notes[($BaseNote+6)]) + "-" + $($CurrentMode.voice[$BaseNote])
+            $ChordPerMode."chord_$Num" = $($Notes[$BaseNote]) + "-" + $($Notes[($BaseNote + 2)]) + "-" + $($Notes[($BaseNote + 4)]) + "-" + $($Notes[($BaseNote + 6)]) + "-" + $($CurrentMode.voice[$BaseNote])
             $ChordPerMode.index = [string]$IndexCount
         }
         $ChordPerMode.type = $CurrentMode.type
