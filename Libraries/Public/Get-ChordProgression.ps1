@@ -112,7 +112,7 @@ function Get-ChordProgression {
             $FilteredChords | Select-Object Index, Chord_1, Chord_2, Chord_3, Chord_4, Chord_5, Chord_6, Chord_7, Mode, Mood | Format-Table
             $ChordSuggestions = Get-NextChord -CurrentChord $ChordNumber
 
-            $ChordNumber = Read-Host -Prompt "Next Chord Number (Column in table) (x to end progression)`nSuggestions: $ChordSuggestions"
+            $ChordNumber = Read-Host -Prompt "Next Chord Number (Column in table): $ChordSuggestions"
 
             $RowIndex = Read-Host -Prompt "Choose Index Number (Row in table) for progression"
             
