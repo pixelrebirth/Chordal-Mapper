@@ -91,10 +91,7 @@ function Get-KeyScale {
         }
     }
 
-    $KeyDiff = $RootNumber
-    if ($KeyDiff -gt 14) {$KeyDiff = $KeyDiff - 14}
-
-    $Signature = switch ($KeyDiff) {
+    $Signature = switch ($RootNumber) {
         "0" {"F,C,G,D,A,E,B"}
         "1" {"F#,C,G,D,A,E,B"}
         "2" {"F#,C#,G,D,A,E,B"}
@@ -110,7 +107,7 @@ function Get-KeyScale {
         "12" {"Bb,Eb,Ab,D,G,C,F"}
         "13" {"Bb,Eb,A,D,G,C,F"}
         "14" {"Bb,E,A,D,G,C,F"}
-        default {throw "Key: $RootKey not on circle of fifths for scale: $ScaleType" ; exit 1}
+        default {throw "Key: $RootKey not on circle of fifths for scale: $ScaleType"}
     }
 
     $Count = 0

@@ -1,5 +1,6 @@
 Write-Host -object "Running Pester..."
-$Results = Invoke-pester -CodeCoverage (ls -recurse *.ps1 -Exclude RunPester.ps1) -PassThru -Quiet
+
+$Results = Invoke-pester -CodeCoverage (ls -recurse *.ps1 -Exclude *.tests.*,RunPester.ps1) -PassThru
 $FailedResults = $Results.TestResult | where {-not $_.Passed}
 $FailedResults | foreach {
     $_.StackTrace -match "at line: (\d*)" | Out-Null

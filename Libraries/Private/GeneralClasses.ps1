@@ -78,35 +78,7 @@ class Progression {
     }
     [void] Add ($InputChord) {
         $this.Chords += $InputChord
-        $this.Numerals = ($this.Chords.split('-') | where {$Input -match "i|v"}) -join ("-")
-    }
-}
-
-class MidiHandler {
-    $MidiOutput = @()
-    [void] MidiFromChord ($Chord, $Octave = 0) {
-        $ChordArray = $Chord.split("-")
-        $ChordArray = $ChordArray[0..$($ChordArray - 1)]
-
-        foreach ($Note in $ChordArray) {
-            $MidiNote = switch ($Note) {
-                "A"     {69}
-                "A#|Bb" {70}
-                "B"     {71}
-                "C"     {72}
-                "C#|Db" {73}
-                "D"     {74}
-                "D#|Eb" {75}
-                "E"     {76}
-                "F"     {77}
-                "F#|Gb" {78}
-                "G"     {79}
-                "G#|Ab" {80}
-            }
-            $MidiNote += ($Octave * 12)
-            $this.MidiOutput += $MidiNote
-        }
-        
+        $this.Numerals = ($this.Chords.split('-') | where {$_ -match "i|v"}) -join ("-")
     }
 }
 
