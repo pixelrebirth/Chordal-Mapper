@@ -133,11 +133,11 @@ function Get-ChordProgression {
         Clear-Host
 
         Write-Host ""
-        Write-Host "Key:        $($SongScale.notes[0])"
-        Write-Host "Type:       $($SongScale.type)"
-        Write-Host "Scale:      $(($SongScale.notes) -join("-"))"
-        Write-Host "Signature:  $(($KeySignature) -join("-"))"
-        Write-Host "Progression:   $($ProgressionObject.numerals)"
+        Write-Host "Key:            $($SongScale.notes[0])"
+        Write-Host "Type:           $($SongScale.type)"
+        Write-Host "Scale:          $(($SongScale.notes) -join("-"))"
+        Write-Host "Signature:      $(($KeySignature) -join("-"))"
+        Write-Host "Progression:    $($ProgressionObject.numerals)"
         Write-Host ""
         
         $ProgressionObject.chords
