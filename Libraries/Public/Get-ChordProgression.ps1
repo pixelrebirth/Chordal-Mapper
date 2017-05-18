@@ -112,18 +112,20 @@ function Get-ChordProgression {
             $FilteredChords | Select-Object Index, Chord_1, Chord_2, Chord_3, Chord_4, Chord_5, Chord_6, Chord_7, Mode, Mood | Format-Table
             $ChordSuggestions = Get-NextChord -CurrentChord $ChordNumber
 
-            $ChordNumber = Read-Host "Next Chord Number (Column in table) (x to end progression)`nSuggestions: $ChordSuggestions"
-            if ($ChordNumber -eq "x") {
-                Write-Verbose -message "Breaking the loop that holds the program open asking for chords."
-                Break
-            }
+            $ChordNumber = Read-Host -Prompt "Next Chord Number (Column in table): $ChordSuggestions"
 
-            $RowIndex = Read-Host "Choose Index Number (Row in table) for progression"
+            $RowIndex = Read-Host -Prompt "Choose Index Number (Row in table) for progression"
             
             $NextChord = $ChordalMap | where {$Input.index -eq $RowIndex}
             $ProgressionObject.add($NextChord."Chord_$ChordNumber") | out-null
             $FilteredChords = $ChordalMap | where {$Input."Chord_$ChordNumber" -match $($NextChord."Chord_$ChordNumber")}
             Clear-Host
+  
+            $quit = Read-Host -Prompt "Would you like to end the chord progression, type x"
+            if ($quit -eq "x") {
+                Write-Verbose -message "Breaking the loop that holds the program open asking for chords."
+                Break
+            }
         }
     }
 
@@ -131,11 +133,11 @@ function Get-ChordProgression {
         Clear-Host
 
         Write-Host ""
-        Write-Host "Key:        $($SongScale.notes[0])"
-        Write-Host "Type:       $($SongScale.type)"
-        Write-Host "Scale:      $(($SongScale.notes) -join("-"))"
-        Write-Host "Signature:  $(($KeySignature) -join("-"))"
-        Write-Host "Progression:   $($ProgressionObject.numerals)"
+        Write-Host "Key:            $($SongScale.notes[0])"
+        Write-Host "Type:           $($SongScale.type)"
+        Write-Host "Scale:          $(($SongScale.notes) -join("-"))"
+        Write-Host "Signature:      $(($KeySignature) -join("-"))"
+        Write-Host "Progression:    $($ProgressionObject.numerals)"
         Write-Host ""
         
         $ProgressionObject.chords
