@@ -5,6 +5,6 @@
 $IonianScale = Get-KeyScale -RootKey C -ScaleType 'Major'
 describe "Convert-ChordalMap" {
     it "Should create a chordmap from the IonianScale" {
-        (Convert-ChordalMap -IonianScale $IonianScale) | should be "chordmap"
+        (Convert-ChordalMap -IonianScale $IonianScale)[0].chord_1 | should be "C-E-G-B-I"
     }
 }
